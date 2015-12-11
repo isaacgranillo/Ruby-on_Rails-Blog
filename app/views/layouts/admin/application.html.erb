@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RailsBlog</title>
+  <%= stylesheet_link_tag    'admin/application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'admin/application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h1>RailsBlog<span>/Admin</span></h1>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="<%= params[:controller] == 'admin/posts' ? "active" : "" %>"><%= link_to "Posts", admin_posts_path %></li>
+            <li class="<%= params[:controller] == 'admin/categories' ? "active" : "" %>"><%= link_to "Categories", admin_categories_path %></li>
+            <li class="<%= params[:controller] == 'admin/users' ? "active" : "" %>"><%= link_to "Users", admin_users_path %></li>
+          </ul>
+            <%= render 'partials/admin/search' %>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="well">
+              <div id="user_nav" class="pull-right">
+                <% if current_user %>
+                  Logged in
+                  <%= link_to "Log out", admin_logout_path %>
+                <% else %>
+                  <%= link_to "Log in", admin_login_path %>
+                <% end %>
+              </div>
+              </div>
+
+              <% if flash[:notice] %>
+                <div class="alert alert-success"><%= flash[:notice] %></div>
+              <% end %>
+
+              <% if flash[:alert] %>
+                <div class="alert alert-danger"><%= flash[:alert] %></div>
+              <% end %>
+              
+          	 <%= yield %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Copyright &copy; 2015, Isaac Granillo | <%= link_to "Client Side", root_path, target:"_blank" %></p>
+    </footer>
+
+</body>
+</html>
